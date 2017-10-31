@@ -8,9 +8,10 @@ export class ColorHelper {
   scaleType: any;
   colorDomain: any[];
   domain: any;
+  nullColor: any;
   customColors: any;
 
-  constructor(scheme, type, domain, customColors?) {
+  constructor(scheme, type, domain, nullColor?, customColors?) {
     if (typeof(scheme) === 'string') {
       scheme = colorSets.find(cs => {
         return cs.name === scheme;
@@ -19,12 +20,17 @@ export class ColorHelper {
     this.colorDomain = scheme.domain;
     this.scaleType = type;
     this.domain = domain;
+    this.nullColor = nullColor;
     this.customColors = customColors;
 
-    this.scale = this.generateColorScheme(scheme, type, this.domain);
+    if(nullColor) {
+      this.scale = this.generateColorScheme(scheme, type, this.domain, nullColor);
+    } else {
+      this.scale = this.generateColorScheme(scheme, type, this.domain);
+    }
   }
 
-  generateColorScheme(scheme, type, domain) {
+  generateColorScheme(scheme, type, domain, nullColor?) {
     if (typeof(scheme) === 'string') {
       scheme = colorSets.find(cs => {
         return cs.name === scheme;
@@ -54,7 +60,9 @@ export class ColorHelper {
         .domain(points)
         .range(colorDomain);
     }
-
+    if(nullColor.length > 0) {
+      colorScale.unshift(nullColor);
+    }
     return colorScale;
   }
 

@@ -58,6 +58,7 @@ import { ColorHelper } from '../common/color.helper';
           [tooltipDisabled]="tooltipDisabled"
           [tooltipTemplate]="tooltipTemplate"
           [tooltipText]="tooltipText"
+          [nullColor]="nullColor"     
           (select)="onClick($event)"
         />
       </svg:g>
@@ -69,6 +70,7 @@ import { ColorHelper } from '../common/color.helper';
 })
 export class HeatMapComponent extends BaseChartComponent {
 
+  @Input() nullColor;
   @Input() legend;
   @Input() legendTitle: string = 'Legend';
   @Input() xAxis;
@@ -137,6 +139,7 @@ export class HeatMapComponent extends BaseChartComponent {
     this.xScale = this.getXScale();
     this.yScale = this.getYScale();
 
+    this.setNullColor(this.nullColor);
     this.setColors();
     this.legendOptions = this.getLegendOptions();
 
@@ -272,8 +275,16 @@ export class HeatMapComponent extends BaseChartComponent {
     return 'ordinal';
   }
 
+  setNullColor(prefColor): void {
+    this.nullColor = prefColor;
+  }
+
   setColors(): void {
-    this.colors = new ColorHelper(this.scheme, this.scaleType, this.valueDomain);
+    if (this.nullColor == null) {
+      this.colors = new ColorHelper(this.scheme, this.scaleType, this.valueDomain);
+    } else {
+      this.colors = new ColorHelper(this.scheme, this.scaleType, this.valueDomain, this.nullColor);
+    }
   }
 
   getLegendOptions() {
