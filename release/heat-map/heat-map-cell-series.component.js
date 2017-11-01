@@ -23,7 +23,8 @@ var HeatCellSeriesComponent = /** @class */ (function () {
         this.data.map(function (row) {
             row.series.map(function (cell) {
                 var value = cell.value;
-                cells.push({
+                if (value > 0) {
+                  cells.push({
                     row: row,
                     cell: cell,
                     x: _this.xScale(row.name),
@@ -34,7 +35,21 @@ var HeatCellSeriesComponent = /** @class */ (function () {
                     data: value,
                     label: formatLabel(cell.name),
                     series: row.name
-                });
+                  });
+                } else {
+                  cells.push({
+                    row: row,
+                    cell: cell,
+                    x: _this.xScale(row.name),
+                    y: _this.yScale(cell.name),
+                    width: _this.xScale.bandwidth(),
+                    height: _this.yScale.bandwidth(),
+                    fill: _this.colors.getColor(value),
+                    data: value,
+                    label: formatLabel(cell.name),
+                    series: row.name
+                  });
+                }
             });
         });
         return cells;

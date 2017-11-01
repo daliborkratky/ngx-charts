@@ -25,6 +25,7 @@ export declare class HeatMapComponent extends BaseChartComponent {
     xScale: any;
     yScale: any;
     color: any;
+    nullColor: any;
     colors: ColorHelper;
     colorScale: any;
     transform: string;

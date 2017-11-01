@@ -7936,7 +7936,7 @@ var ColorHelper = /** @class */ (function () {
         this.scaleType = type;
         this.domain = domain;
         this.customColors = customColors;
-        this.scale = this.generateColorScheme(scheme, type, this.domain);
+        this.scale = this.generateColorScheme(scheme, type, this.domain, this.nullColor);
     }
     ColorHelper.prototype.generateColorScheme = function (scheme, type, domain) {
         if (typeof (scheme) === 'string') {
