@@ -7938,7 +7938,7 @@ var ColorHelper = /** @class */ (function () {
         this.customColors = customColors;
         this.scale = this.generateColorScheme(scheme, type, this.domain, this.nullColor);
     }
-    ColorHelper.prototype.generateColorScheme = function (scheme, type, domain) {
+    ColorHelper.prototype.generateColorScheme = function (scheme, type, domain, nullColor) {
         if (typeof (scheme) === 'string') {
             scheme = __WEBPACK_IMPORTED_MODULE_2__utils_color_sets__["a" /* colorSets */].find(function (cs) {
                 return cs.name === scheme;
@@ -7966,6 +7966,9 @@ var ColorHelper = /** @class */ (function () {
             colorScale = Object(__WEBPACK_IMPORTED_MODULE_1_d3_scale__["scaleLinear"])()
                 .domain(points)
                 .range(colorDomain);
+        }
+        if (nullColor != undefined){
+          colorScale.unshift(nullColor);
         }
         return colorScale;
     };
